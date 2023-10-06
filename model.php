@@ -49,14 +49,14 @@ function write_data() {
         $sql = "insert into board
                 (`from`, body, cdate, subject)
                 values
-                (:from, :body, now(), :subject)";
+                (:from, :body, datetime('now'), :subject)";
     }
 	// 修正
     else {
         $sql = "update board set
                 `from` = :from,
                 body = :body,
-                pdate = now(),
+                pdate = datetime('now'),
                 subject = :subject where row_no = :id";
     }
 
@@ -178,7 +178,7 @@ function connectDb(){
     $result = null;
 
     try {
-        $result = new PDO( $GLOBALS["connect_string"], $GLOBALS["user"], $GLOBALS["password"] );
+        $result = new PDO( 'sqlite:../bbs.sqlite3' );
     } 
     catch ( PDOException $e ) {
         $error["db"] = "<div>{$GLOBALS["connect_string"]}, {$GLOBALS["user"]}, {$GLOBALS["password"]}</div>"; 
